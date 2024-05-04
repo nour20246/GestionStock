@@ -23,11 +23,8 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Install GCC
-      run: sudo apt-get install gcc
-
-    - name: Compile C code
-      run: gcc -o output_file source_file.c
+    - name: Compile Java code
+      run: javac Main.java
 
     - name: Test with jUnit 5
       run: echo "Running jUnit 5 tests"
