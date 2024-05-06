@@ -24,7 +24,7 @@ jobs:
         distribution: 'adopt'
 
     - name: Compile Java code
-      run: javac src/.
+      run: javac Tests/Tests/.
 
     - name: Test with jUnit 5
       run: echo "Running jUnit 5 tests"
