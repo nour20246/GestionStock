@@ -1,7 +1,7 @@
 package InterfacesGraphiques;
 
-import Classes.Magasin;
-import Classes.Produit;
+import src.Classes.Magasin;
+import src.Classes.Produit;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
