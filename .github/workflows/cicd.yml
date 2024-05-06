@@ -23,8 +23,20 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Compile Java code
-      run: javac Interfaces/InterfacesGraphiques/Main.java
+    - name: Install Scene Builder
+      run: |
+        mkdir scenebuilder
+        # Assume you have scenebuilder in your repository root
+        cp path/to/scenebuilder/scenebuilder-executable-or-installer ./scenebuilder/
+        # Add executable permissions if necessary
+        chmod +x ./scenebuilder/scenebuilder-executable
+        # Add scenebuilder to PATH
+        echo "export PATH=$PATH:$(pwd)/scenebuilder" >> $GITHUB_ENV
+
+    - name: Compile Java code with Scene Builder
+      run: |
+        # Assuming your project requires Scene Builder for compilation
+        javac -cp path/to/scenebuilder/javafx-sdk/lib/* Interfaces/InterfacesGraphiques/Main.java
 
     - name: Test with jUnit 5
       run: echo "Running jUnit 5 tests"
