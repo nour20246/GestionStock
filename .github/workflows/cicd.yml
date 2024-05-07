@@ -14,27 +14,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
 
-    - name: Extract JavaFX SDK
-      run: |
-        mkdir -p $HOME/javafx-sdk
-        unzip path/to/javafx-sdk-17.0.1-linux-x64.zip -d $HOME/javafx-sdk
-        echo "export PATH=$HOME/javafx-sdk/lib:\$PATH" >> $HOME/.bashrc
-        source $HOME/.bashrc
+      - name: Extract JavaFX SDK
+        run: |
+          mkdir -p $HOME/javafx-sdk
+          unzip path/to/javafx-sdk-17.0.1-linux-x64.zip -d $HOME/javafx-sdk
+          echo "export PATH=$HOME/javafx-sdk/lib:\$PATH" >> $HOME/.bashrc
+          source $HOME/.bashrc
 
-    - name: Compile Java code with JavaFX
-      run: javac --module-path $HOME/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml Interfaces/InterfacesGraphiques/Main.java
+      - name: Compile Java code with JavaFX  # Assuming FXMLs are pre-built
+        run: javac --module-path $HOME/javafx-sdk/lib --add-modules javafx.controls Interfaces/InterfacesGraphiques/Main.java
 
-    - name: Test with jUnit 5
-      run: echo "Running jUnit 5 tests"
+      - name: Test with jUnit 5
+        run: mvn test  # Replace with your actual testing command (e.g., gradle test)
 
   deploy:
     name: Deploy to Production
@@ -43,6 +43,6 @@ jobs:
     needs: build
 
     steps:
-    - name: Deploy to Production Server
-      # Add deployment steps here, such as copying files to the server
-      run: echo "Deploying to production server"
+      - name: Deploy to Production Server
+        # Add your deployment steps here, such as copying files to the server
+        run: echo "Deploying to production server (replace with actual deployment commands)"
