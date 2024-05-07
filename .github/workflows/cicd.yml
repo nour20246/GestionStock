@@ -23,8 +23,19 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
+    - name: Install JavaFX
+      run: |
+        wget https://gluonhq.com/download/javafx-17.0.1-sdk-linux -O javafx-sdk.zip
+        unzip javafx-sdk.zip
+        echo 'export PATH=$PATH:$PWD/javafx-sdk-17.0.1/lib' >> $GITHUB_ENV
+
+    - name: Install Scene Builder
+      run: |
+        wget https://download2.gluonhq.com/scenebuilder/17.0.0/install/linux/SceneBuilder-17.0.0-SDK.zip
+        unzip SceneBuilder-17.0.0-SDK.zip
+
     - name: Compile Java code
-      run: javac Interfaces/InterfacesGraphiques/Main.java
+      run: javac --module-path $PWD/javafx-sdk-17.0.1/lib --add-modules javafx.controls,javafx.fxml Interfaces/InterfacesGraphiques/Main.java
 
     - name: Test with jUnit 5
       run: echo "Running jUnit 5 tests"
