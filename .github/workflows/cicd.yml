@@ -23,15 +23,27 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Extract JavaFX SDK
+      - name: Create JavaFX SDK directory (optional, for clarity)
+        run: mkdir -p $HOME/javafx-sdk  # Creates the directory if it doesn't exist
+
+      - name: Set JavaFX SDK path (assuming environment variable is not used)
+        env:
+          JAVA_FX_SDK: $HOME/javafx-sdk  # Update with actual path if needed
         run: |
-          mkdir -p $HOME/javafx-sdk
-          unzip path/to/javafx-sdk-17.0.1-linux-x64.zip -d $HOME/javafx-sdk
-          echo "export PATH=$HOME/javafx-sdk/lib:\$PATH" >> $HOME/.bashrc
+          echo "export PATH=$JAVA_FX_SDK/lib:\$PATH" >> $HOME/.bashrc
           source $HOME/.bashrc
 
+      - name: Extract JavaFX SDK (alternative approach using environment variable)
+        # This step can be replaced if you set the JAVA_FX_SDK environment variable beforehand
+        run: |
+          if [ -z "${JAVA_FX_SDK}" ]; then
+            echo "Error: JAVA_FX_SDK environment variable not set. Please define it before running the workflow."
+            exit 1
+          fi
+          unzip "${JAVA_FX_SDK}/path/to/javafx-sdk-17.0.1-linux-x64.zip" -d $JAVA_FX_SDK
+
       - name: Compile Java code with JavaFX  # Assuming FXMLs are pre-built
-        run: javac --module-path $HOME/javafx-sdk/lib --add-modules javafx.controls Interfaces/InterfacesGraphiques/Main.java
+        run: javac --module-path $JAVA_FX_SDK/lib --add-modules javafx.controls Interfaces/InterfacesGraphiques/Main.java
 
       - name: Test with jUnit 5
         run: mvn test  # Replace with your actual testing command (e.g., gradle test)
